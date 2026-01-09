@@ -1,0 +1,61 @@
+DEMO GUIDE - Project Presentation
+
+This document outlines the steps to demonstrate the "Scalable REST API with Authentication & RBAC" project.
+
+PRE-REQUISITES:
+1. Ensure MongoDB is running locally.
+2. Ensure Backend is running (Port 5000).
+3. Ensure Frontend is running (Port 5173/5174).
+
+---
+
+STEP 1: USER REGISTRATION (The "Happy Path")
+1. Open the Frontend URL (likely http://localhost:5173).
+2. You should see the LOGIN page initially (or be redirected there).
+3. Click "Register" to go to the Registration page.
+4. Enter details:
+   - Username: "JohnDoe"
+   - Email: "john@example.com"
+   - Password: "password123"
+5. Click "Register".
+   - EXPECTATION: You should be redirected immediately to the Dashboard.
+   - SETUP: The system automatically logs you in after registration.
+
+STEP 2: USER DASHBOARD (Standard User)
+1. On the Dashboard, verify you see "Welcome, JohnDoe (user)".
+2. "Add Product" form is visible.
+3. Enter a product:
+   - Name: "Laptop"
+   - Description: "Gaming Laptop"
+   - Price: "1200"
+4. Click "Add".
+   - EXPECTATION: The product appears in the list below.
+   - NOTE: You should see a "Delete" button ONLY for this item (because you own it).
+
+STEP 3: LOGOUT & LOGIN
+1. Click "Logout" in the top right.
+2. You are back at the Login screen.
+3. Enter credentials: "john@example.com" / "password123".
+4. Click "Login".
+   - EXPECTATION: Successfully redirected back to Dashboard.
+
+STEP 4: ADMIN DEMONSTRATION (Role-Based Access)
+*To demo this, you need an admin account. Since we don't have an admin UI, we simulate it by registering another user and manually updating them in the database OR by registering with a tool if we allowed it. For this demo, let's just register a second user.*
+
+1. Register a new user: "JaneAdmin", "jane@example.com", "adminpass".
+2. (Technical Verification Step): Explain that normally an Admin would be set in the database. 
+   - *If you want to show the backend security:* Try to delete John's product using Jane's account.
+   - EXPECTATION: The "Delete" button should NOT appear for John's product when Jane is logged in (unless Jane is an Admin). 
+
+STEP 5: API DOCUMENTATION (Backend Proof)
+1. Navigate to: http://localhost:5000/api-docs
+2. Show the Swagger UI.
+3. Explain: "This auto-generated documentation allows frontend developers to understand our API without reading the code."
+4. Expand the "/auth/login" or "/products" section to show the schemas.
+
+---
+
+TROUBLESHOOTING "Timeout" Errors:
+If you see "buffering timed out", it means the BACKEND cannot talk to the DATABASE.
+1. Check if the "mongod" (MongoDB) service is running on your computer.
+2. If using Windows, open Task Manager -> Services and look for "MongoDB". Start it if stopped.
